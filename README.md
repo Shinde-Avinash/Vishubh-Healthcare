@@ -3,6 +3,7 @@
 A comprehensive Django-based healthcare appointment management platform with role-based access for Admins, Doctors, and Patients.
 
 ## Features
+<img width="1910" height="825" alt="image" src="https://github.com/user-attachments/assets/99532dd9-60bf-4482-8ced-d26f3a73324c" />
 
 ### For Patients
 - Register and create profile
