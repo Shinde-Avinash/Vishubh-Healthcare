@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Profile{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="text-center mb-4">
+                <div class="avatar-md mx-auto bg-light rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold mb-3"
+                    style="width: 80px; height: 80px; font-size: 2rem; background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%) !important;">
+                    {{doctor.user.first_name|first}}{{doctor.user.last_name|first}}
+                </div>
+                <h4 class="fw-bold text-primary mb-1">Dr. {{doctor.user.first_name}} {{doctor.user.last_name}}</h4>
+                <p class="text-muted mb-0">{{doctor.specialization}}</p>
+                <div class="mt-2">
+                    <span class="badge bg-light text-dark border me-2">
+                        <i class="fas fa-briefcase me-1"></i>{{doctor.experience_years}} Years Experience
+                    </span>
+                    {% if doctor.qualification %}
+                    <span class="badge bg-light text-dark border">
+                        <i class="fas fa-graduation-cap me-1"></i>{{doctor.qualification}}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-user-edit text-primary me-2"></i>Edit Profile</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" name="first_name"
+                                    value="{{form.first_name.value|default:doctor.user.first_name}}"
+                                    class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" name="last_name"
+                                    value="{{form.last_name.value|default:doctor.user.last_name}}" class="form-control"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email Address *</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-envelope text-muted"></i>
+                                </span>
+                                <input type="email" name="email" value="{{form.email.value|default:doctor.user.email}}"
+                                    class="form-control border-start-0" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{form.specialization.id_for_label}}" class="form-label">Specialization
+                                *</label>
+                            {{form.specialization}}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{form.contact.id_for_label}}" class="form-label">Contact Number *</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-phone text-muted"></i>
+                                </span>
+                                {{form.contact}}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{form.qualification.id_for_label}}" class="form-label">Qualification</label>
+                            {{form.qualification}}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{form.experience_years.id_for_label}}" class="form-label">Years of Experience
+                                *</label>
+                            {{form.experience_years}}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Update Profile
+                            </button>
+                            <a href="{% url 'doctor_dashboard' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% if not doctor.verified %}
+            <div class="alert alert-warning mt-4 border-0 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                    <div>
+                        <h6 class="alert-heading mb-1">Account Pending Verification</h6>
+                        <p class="mb-0 small">Your account is currently under review. You'll be able to see appointments
+                            once verified by our admin team.</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

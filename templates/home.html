@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Vishubh Healthcare{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="container">
+        <h1>Welcome to Vishubh Healthcare</h1>
+        <p>Your trusted partner in healthcare management</p>
+        <p>Book appointments with verified doctors easily and securely</p>
+
+        {% if not user.is_authenticated %}
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'patient_signup' %}" class="btn btn-primary">Register as Patient</a>
+            <a href="{% url 'doctor_signup' %}" class="btn btn-outline">Register as Doctor</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container" style="padding: 3rem 2rem;">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color);">Our Services</h2>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>🩺 Expert Doctors</h3>
+            <p style="margin-top: 1rem;">Connect with verified and experienced healthcare professionals across various
+                specializations.</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>📅 Easy Booking</h3>
+            <p style="margin-top: 1rem;">Book appointments online at your convenience. Track your appointment status in
+                real-time.</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>💳 Digital Invoices</h3>
+            <p style="margin-top: 1rem;">Get digital invoices for all your appointments. Download and save for your
+                records.</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>🔒 Secure & Private</h3>
+            <p style="margin-top: 1rem;">Your health data is protected with industry-standard security measures.</p>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 3rem;">
+        <div class="card-header">How It Works</div>
+        <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">1. Register</h3>
+                    <p>Create your account as a patient or doctor. Wait for admin verification.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">2. Find Doctor</h3>
+                    <p>Browse through our list of verified doctors and their specializations.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">3. Book Appointment</h3>
+                    <p>Select your preferred date and time. Describe your symptoms.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">4. Get Confirmation</h3>
+                    <p>Admin reviews and confirms your appointment. Receive digital invoice.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

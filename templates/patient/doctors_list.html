@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Find Doctors{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+            <h4 class="text-center text-primary mb-4 fw-bold">Find Your Doctor</h4>
+            <form method="get" class="d-flex shadow-sm">
+                <input type="text" name="search" class="form-control border-0"
+                    placeholder="Search by name or specialization..." value="{{search_query}}"
+                    style="padding: 0.875rem 1.25rem; border-radius: 0.75rem 0 0 0.75rem;">
+                <button type="submit" class="btn btn-primary px-4" style="border-radius: 0 0.75rem 0.75rem 0;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% if doctors %}
+    <div class="row g-4">
+        {% for doctor in doctors %}
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm text-center">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <div class="avatar-md mx-auto bg-light rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold mb-3"
+                            style="width: 72px; height: 72px; font-size: 1.75rem; background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%) !important;">
+                            {{doctor.user.first_name|first}}{{doctor.user.last_name|first}}
+                        </div>
+                        <h6 class="card-title mb-1 fw-bold text-primary">
+                            Dr. {{doctor.user.first_name}} {{doctor.user.last_name}}
+                        </h6>
+                        <small class="text-primary fw-bold d-block mb-2" style="font-size: 0.875rem;">
+                            {{doctor.specialization}}
+                        </small>
+                    </div>
+
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+                        <span class="badge bg-light text-dark border" style="font-size: 0.75rem;">
+                            <i class="fas fa-briefcase me-1"></i>{{doctor.experience_years}} Yrs
+                        </span>
+                        {% if doctor.qualification %}
+                        <span class="badge bg-light text-dark border" style="font-size: 0.75rem;">
+                            <i class="fas fa-graduation-cap me-1"></i>{{doctor.qualification}}
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <p class="small text-muted mb-3">
+                        <i class="fas fa-phone-alt me-1"></i>{{doctor.contact}}
+                    </p>
+
+                    <a href="{% url 'book_appointment' %}" class="btn btn-primary btn-sm w-100">
+                        <i class="fas fa-calendar-plus me-1"></i>Book Appointment
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-user-md fa-4x text-muted opacity-25 mb-3"></i>
+        <h5 class="text-muted">No doctors found</h5>
+        <p class="text-muted small">Try adjusting your search criteria</p>
+        {% if search_query %}
+        <a href="{% url 'doctors_list' %}" class="btn btn-outline-primary mt-2">Clear Search</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

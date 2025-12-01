@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-primary mb-2">Book New Appointment</h2>
+                <p class="text-muted">Schedule your consultation with our expert doctors</p>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-calendar-plus text-primary me-2"></i>Appointment Details
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label for="{{form.doctor.id_for_label}}" class="form-label">Select Doctor <span
+                                    class="text-muted">(Optional)</span></label>
+                            {{form.doctor}}
+                            <small class="form-text text-muted d-block mt-1">
+                                <i class="fas fa-info-circle me-1"></i>You can select a doctor or leave it for admin to
+                                assign
+                            </small>
+                            {% if form.doctor.errors %}
+                            <div class="text-danger small mt-2">
+                                {% for error in form.doctor.errors %}
+                                <i class="fas fa-exclamation-circle me-1"></i>{{error}}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="{{form.appointment_date.id_for_label}}" class="form-label">Appointment Date
+                                    *</label>
+                                {{form.appointment_date}}
+                                {% if form.appointment_date.errors %}
+                                <div class="text-danger small mt-2">
+                                    {% for error in form.appointment_date.errors %}
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{error}}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{form.appointment_time.id_for_label}}" class="form-label">Appointment Time
+                                    *</label>
+                                {{form.appointment_time}}
+                                {% if form.appointment_time.errors %}
+                                <div class="text-danger small mt-2">
+                                    {% for error in form.appointment_time.errors %}
+                                    <i class="fas fa-exclamation-circle me-1"></i>{{error}}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{form.symptoms.id_for_label}}" class="form-label">Symptoms *</label>
+                            {{form.symptoms}}
+                            <small class="form-text text-muted d-block mt-1">
+                                <i class="fas fa-info-circle me-1"></i>Please describe your symptoms in detail
+                            </small>
+                            {% if form.symptoms.errors %}
+                            <div class="text-danger small mt-2">
+                                {% for error in form.symptoms.errors %}
+                                <i class="fas fa-exclamation-circle me-1"></i>{{error}}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-check-circle me-2"></i>Book Appointment
+                            </button>
+                            <a href="{% url 'patient_dashboard' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% if doctors %}
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0 fw-bold"><i class="fas fa-user-md text-primary me-2"></i>Available Doctors</h6>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row g-3">
+                        {% for doctor in doctors %}
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center p-3 bg-light rounded">
+                                <div class="avatar-sm me-3 bg-white rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold shadow-sm"
+                                    style="width: 48px; height: 48px;">
+                                    {{doctor.user.first_name|first}}{{doctor.user.last_name|first}}
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 fw-bold">Dr. {{doctor.user.first_name}} {{doctor.user.last_name}}
+                                    </h6>
+                                    <small class="text-primary fw-bold">{{doctor.specialization}}</small>
+                                    <div class="mt-1">
+                                        <span class="badge bg-white text-dark border me-1" style="font-size: 0.7rem;">
+                                            <i class="fas fa-briefcase me-1"></i>{{doctor.experience_years}} Yrs
+                                        </span>
+                                        {% if doctor.qualification %}
+                                        <span class="badge bg-white text-dark border" style="font-size: 0.7rem;">
+                                            {{doctor.qualification}}
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

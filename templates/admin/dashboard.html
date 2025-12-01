@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Vishubh Healthcare{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">Admin Dashboard</h2>
+            <p class="text-muted mb-0">Manage your healthcare system</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'admin_manage_users' %}" class="btn btn-outline-primary">
+                <i class="fas fa-users me-1"></i>Manage Users
+            </a>
+            <a href="{% url 'admin_manage_appointments' %}" class="btn btn-primary">
+                <i class="fas fa-calendar-alt me-1"></i>Appointments
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-muted mb-1 text-uppercase"
+                                style="font-size: 0.75rem; letter-spacing: 0.5px;">Total Patients</h6>
+                            <h2 class="fw-bold mb-0 text-primary">{{total_patients}}</h2>
+                        </div>
+                        <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fas fa-users fa-lg text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center text-muted small">
+                        <i class="fas fa-user-check me-1"></i>
+                        <span>Registered patients</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-muted mb-1 text-uppercase"
+                                style="font-size: 0.75rem; letter-spacing: 0.5px;">Total Doctors</h6>
+                            <h2 class="fw-bold mb-0 text-success">{{total_doctors}}</h2>
+                        </div>
+                        <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user-md fa-lg text-success"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center text-muted small">
+                        <i class="fas fa-stethoscope me-1"></i>
+                        <span>Medical professionals</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-muted mb-1 text-uppercase"
+                                style="font-size: 0.75rem; letter-spacing: 0.5px;">Total Appointments</h6>
+                            <h2 class="fw-bold mb-0 text-info">{{total_appointments}}</h2>
+                        </div>
+                        <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fas fa-calendar-check fa-lg text-info"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center text-muted small">
+                        <i class="fas fa-clipboard-list me-1"></i>
+                        <span>All time bookings</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-muted mb-1 text-uppercase"
+                                style="font-size: 0.75rem; letter-spacing: 0.5px;">Pending Appointments</h6>
+                            <h2 class="fw-bold mb-0 text-warning">{{pending_appointments}}</h2>
+                        </div>
+                        <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fas fa-clock fa-lg text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center text-muted small">
+                        <i class="fas fa-hourglass-half me-1"></i>
+                        <span>Awaiting confirmation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-muted mb-1 text-uppercase"
+                                style="font-size: 0.75rem; letter-spacing: 0.5px;">Confirmed</h6>
+                            <h2 class="fw-bold mb-0 text-success">{{confirmed_appointments}}</h2>
+                        </div>
+                        <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fas fa-check-circle fa-lg text-success"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center text-muted small">
+                        <i class="fas fa-thumbs-up me-1"></i>
+                        <span>Ready to proceed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-muted mb-1 text-uppercase"
+                                style="font-size: 0.75rem; letter-spacing: 0.5px;">Pending Verifications</h6>
+                            <h2 class="fw-bold mb-0 text-danger">{{pending_doctors|add:pending_patients}}</h2>
+                        </div>
+                        <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user-clock fa-lg text-danger"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center text-muted small">
+                        <i class="fas fa-exclamation-triangle me-1"></i>
+                        <span>{{pending_doctors}} doctors, {{pending_patients}} patients</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold"><i class="fas fa-bolt text-warning me-2"></i>Quick Actions</h5>
+        </div>
+        <div class="card-body p-4">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <a href="{% url 'admin_manage_users' %}"
+                        class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-between">
+                        <span><i class="fas fa-users me-2"></i>Manage Users</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{% url 'admin_manage_appointments' %}"
+                        class="btn btn-outline-primary w-100 py-3 d-flex align-items-center justify-content-between">
+                        <span><i class="fas fa-calendar-alt me-2"></i>Manage Appointments</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

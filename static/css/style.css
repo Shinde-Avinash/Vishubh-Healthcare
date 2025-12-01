@@ -1,0 +1,362 @@
+:root {
+    --primary-color: #1e40af;
+    --primary-dark: #1e3a8a;
+    --primary-light: #3b82f6;
+    --primary-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    --secondary-color: #64748b;
+    --danger-color: #dc2626;
+    --warning-color: #f59e0b;
+    --success-color: #16a34a;
+    --info-color: #0891b2;
+
+    /* Dark Mode - Default */
+    --bg-body: #0f172a;
+    --bg-card: #1e293b;
+    --bg-card-hover: #334155;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="light"] {
+    --bg-body: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Navbar - Premium Design */
+.navbar {
+    background: var(--bg-card) !important;
+    border-bottom: 1px solid var(--border-color);
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    font-size: 1.35rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-link {
+    color: var(--text-primary) !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+    background-color: var(--bg-card-hover);
+}
+
+/* Cards - Premium Design */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hover) 100%);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.card-body {
+    padding: 1.25rem;
+    color: var(--text-primary);
+}
+
+.card-footer {
+    background-color: var(--bg-card-hover);
+    border-top: 1px solid var(--border-color);
+    padding: 0.875rem 1.25rem;
+}
+
+/* Forms - Premium Design */
+.form-control,
+.form-select {
+    background-color: var(--bg-card);
+    border: 1.5px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Tables - Premium Design */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-primary);
+    --bs-table-border-color: var(--border-color);
+    font-size: 0.925rem;
+}
+
+.table th {
+    font-weight: 700;
+    color: var(--text-secondary);
+    border-bottom-width: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.75rem;
+}
+
+.table-hover tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--bg-card-hover);
+    transform: scale(1.01);
+}
+
+/* Buttons - Premium Design */
+.btn {
+    font-size: 0.925rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(30, 64, 175, 0.4);
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-gradient);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(30, 64, 175, 0.3);
+}
+
+.btn-sm {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+}
+
+/* Badges - Premium Design */
+.badge {
+    font-weight: 600;
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.5rem;
+    letter-spacing: 0.3px;
+    font-size: 0.75rem;
+}
+
+.badge.rounded-pill {
+    border-radius: 50rem;
+}
+
+/* Alerts - Premium Design */
+.alert {
+    border-radius: 0.875rem;
+    border: 1.5px solid var(--border-color);
+    padding: 1rem 1.25rem;
+    font-weight: 500;
+}
+
+/* Avatar - Premium Design */
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.avatar-md {
+    width: 64px;
+    height: 64px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Dropdown - Premium Design */
+.dropdown-menu {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 0.875rem;
+    box-shadow: var(--shadow-lg);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    color: var(--text-primary);
+    border-radius: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+.dropdown-divider {
+    border-color: var(--border-color);
+    margin: 0.5rem 0;
+}
+
+/* Footer - Premium Design */
+.footer {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hover) 100%);
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+    margin-top: auto;
+}
+
+/* Utilities */
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.bg-light {
+    background-color: var(--bg-card-hover) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+/* Premium Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* Search Bar - Premium */
+.form-control[type="text"] {
+    background-color: var(--bg-card);
+    border: 2px solid var(--border-color);
+}
+
+.form-control[type="text"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+}
+
+/* Stat Cards - Premium */
+.bg-primary {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%) !important;
+}
+
+.bg-success {
+    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%) !important;
+}
+
+.bg-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%) !important;
+}
+
+.bg-danger {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+}
+
+.bg-info {
+    background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%) !important;
+}
+
+/* Scrollbar - Premium */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
