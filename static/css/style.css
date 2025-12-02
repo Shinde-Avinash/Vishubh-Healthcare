@@ -360,3 +360,9 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
+
+/* Force red color for heart icon */
+.navbar-brand i.fa-heartbeat {
+    color: #ff0000 !important;
+    -webkit-text-fill-color: #ff0000 !important;
+}
