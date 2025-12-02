@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment - Vishubh Healthcare{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 50px auto;">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0"><i class="fas fa-credit-card"></i> Complete Payment</h3>
+        </div>
+        <div class="card-body">
+            <h5>Appointment Details</h5>
+            <table class="table table-borderless">
+                <tr>
+                    <td><strong>Patient:</strong></td>
+                    <td>{{ appointment.patient.user.get_full_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Doctor:</strong></td>
+                    <td>
+                        {% if appointment.doctor %}
+                            Dr. {{ appointment.doctor.user.get_full_name }}
+                        {% else %}
+                            To be assigned
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Date:</strong></td>
+                    <td>{{ appointment.appointment_date }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Time:</strong></td>
+                    <td>{{ appointment.appointment_time }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Consultation Fee:</strong></td>
+                    <td><h4 class="text-success">₹{{ appointment.payment_amount }}</h4></td>
+                </tr>
+            </table>
+
+            <hr>
+
+            <div class="text-center">
+                <button id="rzp-button" class="btn btn-success btn-lg">
+                    <i class="fas fa-lock"></i> Pay ₹{{ appointment.payment_amount }}
+                </button>
+                <p class="text-muted mt-2"><small>Secure payment powered by Razorpay</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById('rzp-button').onclick = function(e){
+    e.preventDefault();
+    
+    var options = {
+        "key": "{{ razorpay_key }}",
+        "amount": "{{ amount|floatformat:0 }}00", // Amount in paise
+        "currency": "{{ currency }}",
+        "name": "Vishubh Healthcare",
+        "description": "Appointment Consultation Fee",
+        "order_id": "{{ order_id }}",
+        "handler": function (response){
+            // Create form and submit
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{% url "payment_callback" %}';
+            
+            var csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = '{{ csrf_token }}';
+            form.appendChild(csrfInput);
+            
+            var paymentId = document.createElement('input');
+            paymentId.type = 'hidden';
+            paymentId.name = 'razorpay_payment_id';
+            paymentId.value = response.razorpay_payment_id;
+            form.appendChild(paymentId);
+            
+            var orderId = document.createElement('input');
+            orderId.type = 'hidden';
+            orderId.name = 'razorpay_order_id';
+            orderId.value = response.razorpay_order_id;
+            form.appendChild(orderId);
+            
+            var signature = document.createElement('input');
+            signature.type = 'hidden';
+            signature.name = 'razorpay_signature';
+            signature.value = response.razorpay_signature;
+            form.appendChild(signature);
+            
+            var appointmentId = document.createElement('input');
+            appointmentId.type = 'hidden';
+            appointmentId.name = 'appointment_id';
+            appointmentId.value = '{{ appointment.id }}';
+            form.appendChild(appointmentId);
+            
+            document.body.appendChild(form);
+            form.submit();
+        },
+        "prefill": {
+            "name": "{{ appointment.patient.user.get_full_name }}",
+            "email": "{{ appointment.patient.user.email }}",
+            "contact": "{{ appointment.patient.contact }}"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    
+    var rzp = new Razorpay(options);
+    rzp.open();
+}
+</script>
+{% endblock %}

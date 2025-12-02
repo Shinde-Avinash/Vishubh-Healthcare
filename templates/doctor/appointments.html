@@ -30,44 +30,56 @@
                             <th class="py-3 small text-muted text-uppercase border-0">Age</th>
                             <th class="py-3 small text-muted text-uppercase border-0">Date & Time</th>
                             <th class="py-3 small text-muted text-uppercase border-0">Symptoms</th>
-                            <th class="pe-4 py-3 small text-muted text-uppercase border-0">Status</th>
+                            <th class="py-3 small text-muted text-uppercase border-0">Status</th>
+                            <th class="pe-4 py-3 small text-muted text-uppercase border-0">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for appointment in appointments %}
                         <tr>
-                            <td class="ps-4"><span class="badge bg-light text-dark border">#{{appointment.id}}</span>
+                            <td class="ps-4"><span class="badge bg-light text-dark border">#{{ appointment.id }}</span>
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar-sm me-2 bg-light rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold"
                                         style="width: 32px; height: 32px; font-size: 0.75rem;">
-                                        {{appointment.patient.user.first_name|first}}
+                                        {{ appointment.patient.user.first_name|first }}
                                     </div>
-                                    <span class="fw-bold">{{appointment.patient.user.get_full_name}}</span>
+                                    <span class="fw-bold">{{ appointment.patient.user.get_full_name }}</span>
                                 </div>
                             </td>
-                            <td><small class="text-muted">{{appointment.patient.contact}}</small></td>
-                            <td><small class="text-muted">{{appointment.patient.age|default:"N/A"}}</small></td>
+                            <td><small class="text-muted">{{ appointment.patient.contact }}</small></td>
+                            <td><small class="text-muted">{{ appointment.patient.age|default:"N/A" }}</small></td>
                             <td>
                                 <div class="small">
-                                    <i class="far fa-calendar me-1"></i>{{appointment.appointment_date}}<br>
-                                    <i class="far fa-clock me-1"></i>{{appointment.appointment_time}}
+                                    <i class="far fa-calendar me-1"></i>{{ appointment.appointment_date }}<br>
+                                    <i class="far fa-clock me-1"></i>{{ appointment.appointment_time }}
                                 </div>
                             </td>
-                            <td><small class="text-muted">{{appointment.symptoms|truncatewords:10}}</small></td>
-                            <td class="pe-4">
+                            <td><small class="text-muted">{{ appointment.symptoms|truncatewords:10 }}</small></td>
+                            <td>
                                 {% if appointment.status == 'pending' %}
-                                <span
-                                    class="badge bg-warning text-dark rounded-pill">{{appointment.get_status_display}}</span>
+                                <span class="badge bg-warning text-dark rounded-pill">{{ appointment.get_status_display }}</span>
                                 {% elif appointment.status == 'confirmed' %}
-                                <span class="badge bg-success rounded-pill">{{appointment.get_status_display}}</span>
+                                <span class="badge bg-success rounded-pill">{{ appointment.get_status_display }}</span>
                                 {% elif appointment.status == 'completed' %}
-                                <span
-                                    class="badge bg-info text-white rounded-pill">{{appointment.get_status_display}}</span>
+                                <span class="badge bg-info text-white rounded-pill">{{ appointment.get_status_display }}</span>
                                 {% else %}
-                                <span class="badge bg-danger rounded-pill">{{appointment.get_status_display}}</span>
+                                <span class="badge bg-danger rounded-pill">{{ appointment.get_status_display }}</span>
                                 {% endif %}
+                            </td>
+                            <td class="pe-4">
+                                <form method="POST" action="{% url 'doctor_update_status' appointment.id %}"
+                                    class="d-inline">
+                                    {% csrf_token %}
+                                    <select name="status" class="form-select form-select-sm"
+                                        onchange="this.form.submit()" style="width: auto;">
+                                        <option value="">Update Status</option>
+                                        <option value="confirmed" {% if appointment.status == 'confirmed' %}disabled{% endif %}>Confirm</option>
+                                        <option value="completed" {% if appointment.status == 'completed' %}disabled{% endif %}>Complete</option>
+                                        <option value="cancelled" {% if appointment.status == 'cancelled' %}disabled{% endif %}>Cancel</option>
+                                    </select>
+                                </form>
                             </td>
                         </tr>
                         {% endfor %}
@@ -85,3 +97,5 @@
     </div>
 </div>
 {% endblock %}
+
+

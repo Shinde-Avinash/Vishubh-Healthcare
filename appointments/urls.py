@@ -9,6 +9,7 @@ urlpatterns = [
     
     # Doctor appointment URLs
     path('doctor/appointments/', views.doctor_appointments, name='doctor_appointments'),
+    path('doctor/update-status/<int:appointment_id>/', views.doctor_update_status, name='doctor_update_status'),
     
     # Admin appointment URLs
     path('admin/appointments/', views.admin_manage_appointments, name='admin_manage_appointments'),
@@ -17,4 +18,13 @@ urlpatterns = [
     # Invoice URLs
     path('invoice/<int:invoice_id>/', views.view_invoice, name='view_invoice'),
     path('invoice/<int:invoice_id>/download/', views.download_invoice, name='download_invoice'),
+    
+    # Payment URLs
+    path('payment/initiate/<int:appointment_id>/', views.initiate_payment, name='initiate_payment'),
+    path('payment/callback/', views.payment_callback, name='payment_callback'),
+    path('payment/success/<int:appointment_id>/', views.payment_success, name='payment_success'),
+    path('payment/failure/<int:appointment_id>/', views.payment_failure, name='payment_failure'),
+    
+    # AJAX endpoints
+    path('check-availability/', views.check_availability, name='check_availability'),
 ]

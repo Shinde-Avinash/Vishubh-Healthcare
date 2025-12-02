@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment Successful - Vishubh Healthcare{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 50px auto;">
+    <div class="card shadow-lg border-success">
+        <div class="card-header bg-success text-white text-center">
+            <i class="fas fa-check-circle fa-3x mb-3"></i>
+            <h3 class="mb-0">Payment Successful!</h3>
+        </div>
+        <div class="card-body text-center">
+            <p class="lead">Your payment has been processed successfully.</p>
+
+            <div class="alert alert-success">
+                <strong>Transaction ID:</strong> {{ appointment.payment_id }}
+            </div>
+
+            <h5 class="mt-4">Appointment Details</h5>
+            <table class="table table-borderless">
+                <tr>
+                    <td><strong>Patient:</strong></td>
+                    <td>{{ appointment.patient.user.get_full_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Doctor:</strong></td>
+                    <td>
+                        {% if appointment.doctor %}
+                        Dr. {{ appointment.doctor.user.get_full_name }}
+                        {% else %}
+                        To be assigned
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Date:</strong></td>
+                    <td>{{ appointment.appointment_date }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Time:</strong></td>
+                    <td>{{ appointment.appointment_time }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Amount Paid:</strong></td>
+                    <td><strong class="text-success">₹{{ appointment.payment_amount }}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Payment Status:</strong></td>
+                    <td><span class="badge badge-success">{{ appointment.get_payment_status_display }}</span></td>
+                </tr>
+            </table>
+
+            <div class="mt-4">
+                <p class="text-muted">
+                    <i class="fas fa-info-circle"></i>
+                    You will receive a confirmation email shortly. Please arrive 10 minutes before your appointment
+                    time.
+                </p>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'patient_appointments' %}" class="btn btn-primary">
+                    <i class="fas fa-calendar-alt"></i> View My Appointments
+                </a>
+                {% if appointment.invoice %}
+                <a href="{% url 'download_invoice' appointment.invoice.id %}" class="btn btn-secondary">
+                    <i class="fas fa-download"></i> Download Invoice
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
